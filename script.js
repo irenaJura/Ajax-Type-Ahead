@@ -23,9 +23,15 @@ function findMatches(wordToMatch, cities) {
 function displayMatches() {
   const matchArray = findMatches(this.value, cities); // wordToMatch is the searched value
   const html = matchArray.map(place => { // loop over the array and create li and span elements with searched results
-      return `
+    // highlight searched words by creating a new regexp
+    // to replace the orginal span with a span with hl class
+    const regex = new RegExp(this.value, 'gi');
+    const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
+
+    return `
       <li>
-        <span class="name">${place.city}, ${place.state}</span>
+        <span class="name">${cityName}, ${stateName}</span>
         <span class="population">${place.population}</span>
       </li>`;
   }).join(''); // turn an array with multiple items into string
