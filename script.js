@@ -18,3 +18,22 @@ function findMatches(wordToMatch, cities) {
         return place.city.match(regex) || place.state.match(regex); // match() method retrieves the result of matching a string against a regular expression
     });
 }
+
+// function to display matched results
+function displayMatches() {
+  const matchArray = findMatches(this.value, cities); // wordToMatch is the searched value
+  const html = matchArray.map(place => { // loop over the array and create li and span elements with searched results
+      return `
+      <li>
+        <span class="name">${place.city}, ${place.state}</span>
+        <span class="population">${place.population}</span>
+      </li>`;
+  }).join(''); // turn an array with multiple items into string
+  suggestions.innerHTML = html;
+}
+
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', displayMatches); // trigges when clicked outside the search input
+searchInput.addEventListener('keyup', displayMatches); // fires on keyup event
